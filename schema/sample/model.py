@@ -9,7 +9,7 @@ Equal Plus
 #===============================================================================
 from typing import List
 from pydantic import BaseModel
-from common import ID, Key, BaseSchema, ProfSchema, TagSchema, MetaSchema
+from common import SchemaConfig, LayerOpt, Reference, ID, Key, BaseSchema, ProfSchema, TagSchema, MetaSchema
 
 
 #===============================================================================
@@ -18,6 +18,10 @@ from common import ID, Key, BaseSchema, ProfSchema, TagSchema, MetaSchema
 class User(BaseModel, ProfSchema): pass
 
 
+@SchemaConfig(
+major=1, minor=1,
+cacheOption=LayerOpt(expire=86400),
+searchOption=LayerOpt(expire=2419200))
 class Blog(BaseModel, MetaSchema, TagSchema, BaseSchema):
     title:Key = ''
     text:str = ''
@@ -25,6 +29,10 @@ class Blog(BaseModel, MetaSchema, TagSchema, BaseSchema):
     subscriptions:List[User] = []
 
 
+@SchemaConfig(
+major=1, minor=1,
+cacheOption=LayerOpt(expire=86400),
+searchOption=LayerOpt(expire=2419200))
 class Message(BaseModel, BaseSchema):
     text:str = ''
     owner:User
